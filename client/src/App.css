@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-height: 100vh;
+    background-color: #00122d;
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 30px 0;
+    display: flex;
+    place-items: center;
+    color: white;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+* {    
+    font-family: "a타이틀고딕3"
+}
+
+::-webkit-input-placeholder {
+    text-align: center;
+}
+
+@font-face {
+    font-family: "a고딕13";
+    src: url("./assets/fonts/a고딕13.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "a타이틀고딕3";
+    src: url("./assets/fonts/a타이틀고딕3.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "a타이틀고딕5";
+    src: url("./assets/fonts/a타이틀고딕5.ttf") format("truetype");
+}
