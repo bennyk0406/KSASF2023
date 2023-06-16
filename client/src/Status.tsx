@@ -30,9 +30,15 @@ interface MoveProps {
 const Move: React.FC<MoveProps> = (props) => {
     return (
         <div css={css`
-            border: 1px solid black;
-            padding: 5px;
-            border-radius: 5px;
+            padding: 7px;
+            border-radius: 10px;
+            border: 1px solid #00122d;
+            transition: background-color 1s, color 1s;
+            &:hover {
+                border: 1px solid white;
+                background-color: white;
+                color: #00122d;
+            }
             ${props.style}
         `} onClick={props.action}>
             {props.content}

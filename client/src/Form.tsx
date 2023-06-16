@@ -192,14 +192,13 @@ const Form = () => {
         <div css={css`
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             font-family: "Noto Sans KR", sans-serif;
             font-weight: 500;
             max-width: 1000px;
+            height: 100%;
             gap: 30px;
-            margin: auto;
-            padding-bottom: 30px;
+            box-sizing: border-box;
         `}>
             <Question>
                 <Title>
@@ -264,6 +263,7 @@ const Form = () => {
                     background-color: white;
                     color: #00122d;
                     font-size: 19px;
+                    margin-bottom: 30px;
                 `} onClick={submit}>
                     Submit
                 </div>
