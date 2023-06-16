@@ -3,6 +3,7 @@ import { FormHome } from "./FormHome"
 import { Form } from "./Form"
 import { Status } from "./Status"
 import { Header } from "./Header"
+import { FormResult } from "./FormResult"
 
 import "./App.css"
 
@@ -19,8 +20,9 @@ const App = () =>
         <Header />
         <BrowserRouter>
             <Routes>
-                <Route path="/form" element={<FormHome />} />
-                <Route path="/form/:code" element={<Form />} />
+                <Route path="/" element={<FormHome />} />
+                <Route path="/form" element={<Form />} />
+                <Route path="/form/result" element={<FormResult />} />
                 <Route path="/status" element={<Status />} />
             </Routes>
         </BrowserRouter>

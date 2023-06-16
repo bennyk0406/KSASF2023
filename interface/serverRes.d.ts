@@ -12,10 +12,11 @@ interface ServerResResearchInfo extends ServerResTemplate {
     }
 }
 
-interface ServerResCheckDone extends ServerResTemplate {
-    type: "checkDone"
+interface ServerResCheckValid extends ServerResTemplate {
+    type: "checkValid"
     content: {
         result: boolean
+        message: null | string
     }
 }
 
@@ -28,7 +29,7 @@ interface ServerResSubmit extends ServerResTemplate {
 
 type ServerRes =
     ServerResResearchInfo |
-    ServerResCheckDone |
+    ServerResCheckValid |
     ServerResSubmit
 
-export type { ServerRes, ServerResResearchInfo, ServerResCheckDone, ServerResSubmit }
+export type { ServerRes, ServerResResearchInfo, ServerResCheckValid, ServerResSubmit }

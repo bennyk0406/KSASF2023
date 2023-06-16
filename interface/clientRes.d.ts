@@ -10,8 +10,8 @@ interface ClientResResearchInfo extends ClientResTemplate {
     content: null
 }
 
-interface ClientResCheckDone extends ClientResTemplate {
-    query: "checkDone"
+interface ClientResCheckValid extends ClientResTemplate {
+    query: "checkValid"
     content: {
         code: string
     }
@@ -30,7 +30,7 @@ interface ClientResSubmit extends ClientResTemplate {
 
 type ClientRes =
     ClientResResearchInfo |
-    ClientResCheckDone |
+    ClientResCheckValid |
     ClientResSubmit
 
 export type { ClientRes }

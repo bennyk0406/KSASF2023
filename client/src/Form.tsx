@@ -2,10 +2,10 @@
 import { css } from "@emotion/react"
 import React from "react"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { requestQuery } from "./post"
 import { Research, Student } from "../../server/src/data/researchInfo"
-import { ServerResResearchInfo, ServerResSubmit } from "../../interface"
+import { ServerResCheckValid, ServerResResearchInfo, ServerResSubmit } from "../../interface"
 
 interface QuestionProps {
     children: React.ReactNode
@@ -139,15 +139,34 @@ const Checkbox: React.FC<CheckboxProps> = (props) => {
 }
 
 const Form = () => {
-    const code = useParams().code as string
+    const [searchParams] = useSearchParams()
     const [myCategoryResearchInfo, setMyCategoryResearchInfo] = useState<Research[]>([])
     const [otherCategoryResearchInfo, setOtherCategoryResearchInfo] = useState<Research[]>([])
     const [ownResearchInfo, setOwnResearchInfo] = useState<Research>()
     const [selectedFirst, setSelectedFirst] = useState<boolean[]>([])
     const [selectedSecond, setSelectedSecond] = useState<boolean[]>([])
 
+    const navigate = useNavigate()
+    const code = searchParams.get("code")
+
     useEffect(() => {
         (async () => {
+            if (code === null) {
+                window.alert("Unknown identification code.")
+                navigate("../")
+                return
+            }
+            const res = await requestQuery({
+                query: "checkValid",
+                content: {
+                    code
+                }
+            }) as ServerResCheckValid
+            if (!res.content.result) {
+                window.alert(res.content.message)
+                navigate("../")
+                return
+            }
             const serverRes = await requestQuery({
                 query: "getResearchInfo",
                 content: null
@@ -162,7 +181,7 @@ const Form = () => {
             setSelectedFirst(new Array(myCategoryResearchInfo.length).fill(false))
             setSelectedSecond(new Array(otherCategoryResearchInfo.length).fill(false))
         })()
-    }, [code])
+    }, [navigate, code])
 
     const submit = async () => {
         if (selectedFirst.filter((v) => v).length !== 2) {
@@ -176,16 +195,14 @@ const Form = () => {
         const res = await requestQuery({
             query: "submit",
             content: {
-                code,
+                code: code as string,
                 vote: {
                     first: selectedFirst.map((_, i) => myCategoryResearchInfo[i]).filter((_, i) => selectedFirst[i]),
                     second: otherCategoryResearchInfo[selectedSecond.findIndex((v) => v)]
                 }
             }
         }) as ServerResSubmit
-        if (res.content.result) {
-            window.alert("Successfully submitted. (TODO)")
-        }
+        if (res.content.result) navigate("./result")
     }
 
     return (

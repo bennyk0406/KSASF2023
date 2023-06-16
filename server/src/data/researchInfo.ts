@@ -42,13 +42,25 @@ const researchInfo: Research[] = []
     researchInfo.sort((a, b) => a.category > b.category ? 1 : -1)
 })()
 
-const checkDone = async (code: string) => {
+const checkValid = async (code: string) => {
     const workbook = new Workbook()
     const worksheet = await workbook.xlsx.readFile(resolve(__dirname, "./research.xlsx"))
     const sheet = worksheet.getWorksheet(1)
-    const row = sheet.getRows(1, 150)?.find((row) => row.getCell(14).value?.toString() === code) as Row
-    if (row.getCell(15).value === undefined) return false
-    return true    
+    const row = sheet.getRows(1, 150)?.find((row) => row.getCell(14).value?.toString() === code)
+    if (row === undefined) {
+        return {
+            result: false,
+            message: "Unknown idenfication code."
+        }
+    }
+    if (row.getCell(15).value === null) return {
+        result: true,
+        message: null
+    }
+    return {
+        result: false,
+        message: "You've already taken the survey."
+    }
 }
 
 const vote = async (code: string, vote: { first: Research[], second: Research }) => {
@@ -62,4 +74,4 @@ const vote = async (code: string, vote: { first: Research[], second: Research })
     workbook.xlsx.writeFile(resolve(__dirname, "./research.xlsx"))
 }
 
-export { type Research, type Student, researchInfo, checkDone, vote }
+export { type Research, type Student, researchInfo, checkValid, vote }

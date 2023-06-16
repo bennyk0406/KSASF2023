@@ -1,7 +1,7 @@
 import { resolve } from "path"
 import express from "express"
 import { ClientRes, ServerRes } from "../../interface"
-import { checkDone, researchInfo, vote } from "./data/researchInfo"
+import { checkValid, researchInfo, vote } from "./data/researchInfo"
 
 const app = express()
 app.use(express.static(resolve(__dirname, "../../client/build")))
@@ -28,13 +28,11 @@ app.post("/api", async (req, res) => {
         })
         return
     }
-    if (query === "checkDone") {
-        const result = await checkDone(content.code)
+    if (query === "checkValid") {
+        const res = await checkValid(content.code)
         send({
-            type: "checkDone",
-            content: {
-                result
-            }
+            type: "checkValid",
+            content: res
         })
         return
     }

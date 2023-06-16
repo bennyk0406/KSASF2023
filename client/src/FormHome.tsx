@@ -2,8 +2,6 @@
 import { css } from "@emotion/react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { requestQuery } from "./post"
-import { ServerResCheckDone } from "../../interface"
 
 const FormHome = () => {
     const navigate = useNavigate()
@@ -44,12 +42,7 @@ const FormHome = () => {
                 onChange={(e) => setCode(e.target.value)}
                 onKeyDown={async (e) => {
                     if (e.key === "Enter") {
-                        requestQuery({
-                            query: "checkDone",
-                            content: {
-                                code
-                            }
-                        })
+                        navigate(`./form?code=${code}`)
                     }
                 }}
                 type="text" placeholder="Enter here!" autoFocus />
@@ -69,18 +62,7 @@ const FormHome = () => {
                     background: white;
                     color: #12486d;
                 `} onClick={async () => {
-                    const res = await requestQuery({
-                        query: "checkDone",
-                        content: {
-                            code
-                        }
-                    }) as ServerResCheckDone
-                    if (res.content.result) {
-                        navigate(`./${code}`)
-                    }
-                    else {
-                        window.alert("You've already taken the survey.")
-                    }
+                    navigate(`./form?code=${code}`)
                 }}>
                     Go to the survey
                 </div>
