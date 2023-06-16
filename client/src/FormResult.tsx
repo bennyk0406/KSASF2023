@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react"
-import Logo from "./assets/logo.svg"
 
 const FormResult = () => {
     return (
